@@ -1,4 +1,5 @@
 #WooliesX Code Submission
+#PLEASE NOTE THAT THE CODE BETWEEN THE ASTERIX LINES ARE NOT USED IN THE SLIDE DECK AND THUS SHUD BE IGNORED, THANKS!
 #Libraries required for data analysis and NLP 
 library(rtweet)
 library(tm)
@@ -88,7 +89,7 @@ twitterCorpus <- twitterCorpusCOPY #this will undo everything that happens from 
 twitterCorpus = tm_map(twitterCorpus, lemmatize_strings)
 
 
-#nrc sentimental analysis - not used 
+#nrc sentimental analysis - did not use the code between the aterix for slide deck presentation
 #******************************************************************************
 emotions <-get_nrc_sentiment(twitterCorpus$content)
 barplot(colSums(emotions),cex.names = .7,
@@ -101,7 +102,7 @@ barplot(colSums(emotions),cex.names = .7,
 dtmT <- DocumentTermMatrix(twitterCorpus)
 tidy_dtmT <- tidy(dtmT)#gives us one word per row -> use this to turn DTM to tibble
 
-#graph of top 15 most repeated words--> might need to remove more stop words
+#graph of top 15 most repeated words--> might need to remove more stop words - did not use the code between aterix
 #*****************************************************************************
 tidy_dtmT %>%
   count(term, sort = TRUE) %>%
@@ -133,7 +134,7 @@ tweet_sentiment %>%
   My_Theme
 
 #seperate data analysis of Twitter tweets 
-#clean the tweets
+#clean the tweets - DID NOT USE THE CODE BETWEEN ASTERIX - please ignore
 #***********************************************************************************************
 woolworthtweet$text <- gsub("https\\S*", "", woolworthtweet$text)
 woolworthtweet$text  <-  gsub("@\\S*", "", woolworthtweet$text) 
@@ -221,7 +222,7 @@ barplot(colSums(emotions),cex.names = .7,
         col = rainbow(10),
         main = "Sentiment scores for tweets"
 )
-#ggplot nrc sentiment -> we did not use this plot but left it in the code in case
+#ggplot nrc sentiment -> we did not use this plot but left it in the code in case for further use
 sentimentscores<-data.frame(colSums(emotions[,]))
 names(sentimentscores) <- "Score"
 sentimentscores <- cbind("sentiment"=rownames(sentimentscores),sentimentscores)
@@ -239,7 +240,7 @@ tidy_dtmc <- tidy(dtmc)#gives us one word per row -> use this to turn DTM to tib
 
 cus_sentiments <- tidy_dtmc %>%
   inner_join(get_sentiments("bing"), by = c(term = "word")) 
-#grah to show words that contribute to positive and negative sentiment in woolworths review
+#graph to show words that contribute to positive and negative sentiment in woolworths review
 cus_sentiments %>%
   count(term,sentiment, sort = TRUE) %>%
   ungroup() %>%
