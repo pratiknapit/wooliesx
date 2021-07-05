@@ -43,6 +43,7 @@ tweets <- as_tibble(map_df(woolworthtweet, as.data.frame))
 write.csv(tweets, file="tweets.csv", row.names=FALSE)  
 tweets<-read.csv("tweets.csv")
 names(tweets)[1] <- 'text'
+#tweets <- tweets$text[ ! duplicated(tweets)] <- this removes duplicated tweets but there was no duplicated tweets, so do not need to worry
 twitterCorpus <-Corpus(VectorSource(tweets$text)) #499 documents
 inspect(twitterCorpus[1:10])
 
@@ -101,21 +102,6 @@ barplot(colSums(emotions),cex.names = .7,
 #turn into DTM and then into tidy 
 dtmT <- DocumentTermMatrix(twitterCorpus)
 tidy_dtmT <- tidy(dtmT)#gives us one word per row -> use this to turn DTM to tibble
-
-#graph of top 15 most repeated words--> might need to remove more stop words - did not use the code between aterix
-#*****************************************************************************
-tidy_dtmT %>%
-  count(term, sort = TRUE) %>%
-  top_n(10) %>%
-  mutate(term = reorder(term,n)) %>%
-  ggplot(aes(x = term, y = n)) +
-  geom_col(width = 0.5) +
-  xlab(NULL) +
-  coord_flip() +
-  labs(x = "Count",
-       y = "Unique Words",
-       title = "Count of unique words found in tweets")
-#*****************************************************************************
 
 #sentimental analysis 
 tweet_sentiment <- tidy_dtmT %>%
